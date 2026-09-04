@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Edit {{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  </head>
+  <body>
+    <main class="editor-page">
+      <a class="back-link" href="{{ url_for('index') }}">← Back to schedule</a>
+      <div class="editor-heading">
+        <div>
+          <h1>Edit {{ title }} <span class="line-count">(<span id="line-count">{{ line_count }}</span>)</span></h1>
+        </div>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}<p class="save-message" role="status">{{ messages[0] }}</p>{% endif %}
+        {% endwith %}
+      </div>
+      <form method="post" class="editor-form">
+        <textarea id="content" name="content" dir="rtl" spellcheck="false">{{ content }}</textarea>
+        <button type="submit">Save</button>
+      </form>
+    </main>
+    <script src="{{ url_for('static', filename='editor.js') }}"></script>
+  </body>
+</html>

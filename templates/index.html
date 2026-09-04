@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Amal Hesegim</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav>
+        <a class="brand" href="{{ url_for('index') }}">Amal Hesegim</a>
+        <details class="menu">
+          <summary>Edit lists</summary>
+          <div class="submenu">
+            <a href="{{ url_for('edit_data', list='courses') }}">Courses</a>
+            <a href="{{ url_for('edit_data', list='branches') }}">Branches</a>
+            <a href="{{ url_for('edit_data', list='teachers') }}">Teachers</a>
+            <a href="{{ url_for('edit_data', list='coordinators') }}">Coordinators</a>
+          </div>
+        </details>
+      </nav>
+    </header>
+    <main class="page calendars">
+      {% for month in months %}
+        <section class="calendar">
+          <h1 id="month-{{ month.year }}-{{ month.number }}">{{ month.name }}</h1>
+          <div class="calendar-grid weekday-row">
+            {% for weekday in ('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat') %}<span>{{ weekday }}</span>{% endfor %}
+          </div>
+          <div class="calendar-grid calendar-days">
+            {% for week in month.weeks %}{% for day in week %}
+              {% if day.month != month.number %}
+                <span class="day outside-month"></span>
+              {% elif day < today %}
+                <span class="day past">{{ day.day }}</span>
+              {% elif day == today %}
+                <a class="day today" href="{{ url_for('schedule', date_string=day.isoformat()) }}">{{ day.day }}</a>
+              {% else %}
+                <a class="day future" href="{{ url_for('schedule', date_string=day.isoformat()) }}">{{ day.day }}</a>
+              {% endif %}
+            {% endfor %}{% endfor %}
+          </div>
+        </section>
+      {% endfor %}
+    </main>
+  </body>
+</html>

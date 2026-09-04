@@ -11,14 +11,14 @@
       <a class="back-link" href="{{ url_for('index') }}">← Back to schedule</a>
       <div class="editor-heading">
         <div>
-          <h1>Edit {{ title }} <span class="line-count">(<span id="line-count">{{ line_count }}</span>)</span></h1>
+          <h1>Edit {{ title }} <span class="line-count">(<span id="line-count">{{ lines|length }}</span>)</span></h1>
         </div>
         {% with messages = get_flashed_messages() %}
           {% if messages %}<p class="save-message" role="status">{{ messages[0] }}</p>{% endif %}
         {% endwith %}
       </div>
       <form method="post" class="editor-form">
-        <textarea id="content" name="content" dir="rtl" spellcheck="false">{{ content }}</textarea>
+        <textarea id="content" name="content" dir="rtl" spellcheck="false">{{ "\n".join(lines) }}</textarea>
         <button type="submit">Save</button>
       </form>
     </main>

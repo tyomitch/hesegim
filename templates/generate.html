@@ -10,9 +10,10 @@
     <main class="schedule-page">
       <a href="{{ url_for('index') }}">← Back to calendar</a>
       <h1>{{ title }}</h1>
-      <pre class="schedule-contents" dir="rtl">{{ content }}</pre>
-      <form method="get" class="schedule-generator" action="{{ url_for('generate', date_string=date_string) }}">
-        <button type="submit">Regenerate</button>
+      <form method="post" class="schedule-generator">
+        {% if error %}<p class="generation-error" role="alert">{{ error }}</p>{% endif %}
+        <textarea id="content" name="content" dir="rtl">{{ content }}</textarea>
+        <button type="submit">Generate</button>
       </form>
     </main>
   </body>
